@@ -76,7 +76,7 @@ public:
 fstream file;
 product p;
 
-void doTaskOnceAgain(string question, void (*f)(void))
+void doTaskAgain(string question, void (*f)(void))  //FUNCTION TO REPEAT A CERTAIN TASK AGAIN
 {
     cout << question;
     char choice;
@@ -95,7 +95,7 @@ void addProduct()
     file.write((char *)&p, sizeof(product));
     file.close();
     cout << "\n\n\t\t\t\t\t\tPRODUCT ADDED SUCCESSFULLY\n";
-    doTaskOnceAgain("\t\t\t\t\t\tDO YOU WANT TO ADD ANOTHER PRODUCT?(Y/N): ", addProduct);
+    doTaskAgain("\t\t\t\t\t\tDO YOU WANT TO ADD ANOTHER PRODUCT?(Y/N): ", addProduct);
 }
 
 void deleteProduct()
@@ -127,7 +127,7 @@ void deleteProduct()
     remove("ShopInventory.dat");
     rename("temp.dat", "ShopInventory.dat");
     cout << "\n\t\t\t\t\t\tRECORD DELETED!!";
-    doTaskOnceAgain("\n\t\t\t\t\t\tDO YOU WANT TO DELETE ANOTHER PRODUCT?(Y/N): ", deleteProduct);
+    doTaskAgain("\n\t\t\t\t\t\tDO YOU WANT TO DELETE ANOTHER PRODUCT?(Y/N): ", deleteProduct);
 }
 
 void updateProduct()
@@ -163,7 +163,7 @@ void updateProduct()
     {
         cout << "\t\t\t\t\t\tPRODUCT NOT FOUND!!\n";
     }
-    doTaskOnceAgain("\t\t\t\t\t\tDO YOU WANT TO UPDATE ANOTHER PRODUCT?(Y/N):", updateProduct);
+    doTaskAgain("\t\t\t\t\t\tDO YOU WANT TO UPDATE ANOTHER PRODUCT?(Y/N):", updateProduct);
 }
 
 void displaySpecificRecord()
@@ -192,7 +192,7 @@ void displaySpecificRecord()
     {
         cout << "\t\t\t\t\t\tPRODUCT NOT FOUND!!\n";
     }
-    doTaskOnceAgain("\t\t\t\t\t\tDO YOU WANT TO SEARCH AGAIN?(Y/N): ", displaySpecificRecord);
+    doTaskAgain("\t\t\t\t\t\tDO YOU WANT TO SEARCH AGAIN?(Y/N): ", displaySpecificRecord);
 }
 
 void displayData()
@@ -210,11 +210,11 @@ void displayData()
         cout << "\t\t---------------------------------------------------------------------------------------";
         cout << "\n";
     }
-    cout << "\t\t\t\t\t\t\tLIST ENDED!!\n\n";
+    cout << "\n\n";
     file.close();
 }
 
-void productList()
+void productList()  //DISPLAY A LIST OF AVAILABLE PRODUCTS TO THE CUSTOMER
 {
     cout << "\t\t\t\t\t\t\t    Available Products\n\n";
     cout << "\t\t\t\t*************************************************************************\n";
@@ -231,7 +231,7 @@ void productList()
     file.close();
 }
 
-void currentTime()
+void currentTime()  //GETS CURRENT TIME OF SYSTEM
 {
     time_t ttime = time(0);
     tm *local_time = localtime(&ttime);
@@ -306,10 +306,10 @@ void changePass() //CHANGE ADMIN MENU ACCESS PASSWORD
     cin >> oldPass;
     ifstream inf;
     inf.open("PASSWORD.txt");
-    getline(inf , defaultPass);
+    getline(inf, defaultPass);
     if (oldPass == defaultPass)
     {
-        cout<<"\n\n\t\t\t\t\tPASSWORD SHOULD NOT INCLUDE SPACES";
+        cout << "\n\n\t\t\t\t\tPASSWORD SHOULD NOT INCLUDE SPACES";
         cout << "\n\n\t\t\t\t\tENTER NEW PASSWORD\n\n";
         cin >> newPass;
         if (newPass == oldPass)
@@ -330,14 +330,13 @@ void changePass() //CHANGE ADMIN MENU ACCESS PASSWORD
     else
     {
         cout << "\t\t\t\t\tWRONG PASSWORD\n\n";
-        doTaskOnceAgain("\t\t\t\t\tTRY AGAIN?(Y/N):", changePass);
+        doTaskAgain("\t\t\t\t\tTRY AGAIN?(Y/N):", changePass);
     }
 }
 
 void intro() //BASIC DETAILS ABOUT THE CODER (CALLED AT THE END OF PROGRAM)
 {
     system("cls");
-    system("color 02");
     cout << "\t\t\t\t---------------------------------------------------------\n";
     cout << "\t\t\t\t| CREATED BY : AVI SHARMA\t\t\t        |\n";
     cout << "\t\t\t\t| COURSE : BACHELOR OF TECHNOLOGY\t\t\t|\n";
