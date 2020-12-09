@@ -6,7 +6,7 @@ DEFAULT PASS: 12345
 
 using namespace std;
 
-class product
+class Product
 {
 private:
     int productNo;
@@ -14,7 +14,7 @@ private:
     float rate, discount, tax;
 
 public:
-    product()
+    Product()
     {
         productNo = 0;
         productName[50] = 0;
@@ -74,7 +74,7 @@ public:
 };
 
 fstream file;
-product p;
+Product p;
 
 void doTaskAgain(string question, void (*f)(void))  //FUNCTION TO REPEAT A CERTAIN TASK AGAIN
 {
@@ -92,7 +92,7 @@ void addProduct()
     char option;
     file.open("ShopInventory.dat", ios::out | ios::app);
     p.creatProduct();
-    file.write((char *)&p, sizeof(product));
+    file.write((char *)&p, sizeof(Product));
     file.close();
     cout << "\n\n\t\t\t\t\t\tPRODUCT ADDED SUCCESSFULLY\n";
     doTaskAgain("\t\t\t\t\t\tDO YOU WANT TO ADD ANOTHER PRODUCT?(Y/N): ", addProduct);
@@ -108,7 +108,7 @@ void deleteProduct()
     fstream file2;
     file2.open("temp.dat", ios::out);
     file.seekg(0, ios::beg);
-    while (file.read((char *)&p, sizeof(product)))
+    while (file.read((char *)&p, sizeof(Product)))
     {
         if (p.getProductNo() == num)
         {
@@ -119,7 +119,7 @@ void deleteProduct()
         }
         if (p.getProductNo() != num)
         {
-            file2.write((char *)&p, sizeof(product));
+            file2.write((char *)&p, sizeof(Product));
         }
     }
     file2.close();
@@ -140,7 +140,7 @@ void updateProduct()
 
     file.open("ShopInventory.dat", ios::in | ios::out);
 
-    while (file.read((char *)&p, sizeof(product)) && found == false)
+    while (file.read((char *)&p, sizeof(Product)) && found == false)
     {
         if (p.getProductNo() == num)
         {
@@ -150,9 +150,9 @@ void updateProduct()
             cout << "\t-----------------------------------------------------------------------------------------------------\n";
             cout << "\n\n\n\t\t\t\t\t\tENTER NEW DETAILS\n\n\n";
             p.creatProduct();
-            int pos = -1 * sizeof(product);
+            int pos = -1 * sizeof(Product);
             file.seekp(pos, ios::cur);
-            file.write((char *)&p, sizeof(product));
+            file.write((char *)&p, sizeof(Product));
             cout << "\t\t\t\t\t\tRECORD UPDATED SUCCESSFULLY\n\n";
             found = true;
         }
@@ -177,7 +177,7 @@ void displaySpecificRecord()
     cout << "Displaying Record Of Product #: " << value << "\n\n";
     cout << "\n\t\t\tPr No.\t\tPr Name\t\tDiscount\tTax\t\tRate\n";
     cout << "\t\t---------------------------------------------------------------------------------------\n";
-    while (file.read((char *)&p, sizeof(product)))
+    while (file.read((char *)&p, sizeof(Product)))
     {
         if (p.getProductNo() == value)
         {
@@ -204,7 +204,7 @@ void displayData()
     cout << "\t\t\t\t\t\t**************************\n";
     cout << "\n\t\t\tPr No.\t\tPr Name\t\tDiscount\tTax\t\tRate\n";
     cout << "\t\t---------------------------------------------------------------------------------------\n";
-    while (file.read((char *)&p, sizeof(product)))
+    while (file.read((char *)&p, sizeof(Product)))
     {
         p.showProduct();
         cout << "\t\t---------------------------------------------------------------------------------------";
@@ -222,7 +222,7 @@ void productList()  //DISPLAY A LIST OF AVAILABLE PRODUCTS TO THE CUSTOMER
     cout << "\t\t\t\t-------------------------------------------------------------------------\n";
     file.open("ShopInventory.dat", ios::in);
 
-    while (file.read((char *)&p, sizeof(product)))
+    while (file.read((char *)&p, sizeof(Product)))
     {
         cout << "\t\t\t\t\t" << p.getProductNo() << "\t\t" << p.getProductName() << "\t\t" << p.getRate()
              << "\t\t" << p.getDiscount() << "\n";
@@ -277,7 +277,7 @@ void orderPlacement()
     for (int x = 0; x <= c; x++)
     {
         file.open("ShopInventory.dat", ios::in);
-        file.read((char *)&p, sizeof(product));
+        file.read((char *)&p, sizeof(Product));
         while (!file.eof())
         {
             if (p.getProductNo() == order[x])
@@ -291,7 +291,7 @@ void orderPlacement()
                 cout << "\n\t-----------------------------------------------------------------------------------------------------";
                 total += disamt;
             }
-            file.read((char *)&p, sizeof(product));
+            file.read((char *)&p, sizeof(Product));
         }
         file.close();
     }
